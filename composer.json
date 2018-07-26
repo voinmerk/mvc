@@ -20,9 +20,9 @@
     },
     "autoload": {
         "psr-4": {
-            "mvc\\": "",
-            "mvc\\library\\": "",
-            "mvc\\library\\db": ""
+            "mvc\\": "src/",
+            "mvc\\library\\": "src/",
+            "mvc\\library\\db": "src/"
         }
     }
 }
