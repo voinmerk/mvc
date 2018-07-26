@@ -1,0 +1,13 @@
+{
+    "name": "voinmerk/mvc",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Evgeniy Voyt",
+            "email": "kremniov96@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
