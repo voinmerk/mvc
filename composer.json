@@ -22,7 +22,7 @@
         "psr-4": {
             "mvc\\": "src/",
             "mvc\\library\\": "src/",
-            "mvc\\library\\db": "src/"
+            "mvc\\library\\db\\": "src/"
         }
     }
 }
