@@ -1,6 +1,6 @@
 {
     "name": "voinmerk/mvc",
-    "type": "library",
+    "type": "extension",
     "license": "MIT",
     "authors": [
         {
@@ -9,5 +9,20 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/voinmerk/mvc"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "mvc\\": "",
+            "mvc\\library\\": "",
+            "mvc\\library\\db": ""
+        }
+    }
 }
