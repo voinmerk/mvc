@@ -14,9 +14,11 @@ use mvc\library\Request;
 
  	private $request;
 
+ 	public $controller;
+
  	public function __construct()
  	{
- 		$routes = App::$config['routes'];
+ 		$routes = require DIR_ROOT . '/config/routes.php';
 
  		$this->request = new Request();
 
@@ -34,14 +36,14 @@ use mvc\library\Request;
 
  	public function add($route, $params = [])
  	{
- 		$route = '#^' . $route . '#';
+ 		$route = '#^' . $route . '$#';
 
- 		$this->routes[$route] => $params;
+ 		$this->routes[$route] = $params;
  	}
 
  	public function match()
  	{
- 		$url = trim($this->request['REQUEST_URI'], '/');
+ 		$url = $this->request->server['REQUEST_URI'];
 
  		foreach ($this->routes as $route => $params) {
  			if(preg_match($route, $url, $matches)) {
@@ -57,7 +59,21 @@ use mvc\library\Request;
  	public function run()
  	{
  		if($this->match()) {
- 			echo 'Match TRUE!';
+ 			$controller = 'app\\controllers\\' . ucfirst($this->params['controller']);
+
+ 			if(class_exists($this->controller)) {
+ 				$action = 'action' . ucfirst($this->params['action']);
+
+ 				if(method_exists($controller, $action)) {
+ 					$this->controller = new $controller();
+
+ 					$this->controller->$action();
+ 				} else {
+ 					throw new \Exception("Method '$action' in class '$controller' not found");
+ 				}
+ 			} else {
+ 				throw new \Exception("Class '$controller' not found");
+ 			}
  		}
  	}
 }

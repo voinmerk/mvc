@@ -7,6 +7,8 @@ namespace mvc;
  */
 class Application
 {
+	public static $router;
+	
 	public static $classMap = [];
 
 	public static $config = [];
