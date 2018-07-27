@@ -2,7 +2,6 @@
 
 namespace mvc;
 
-class Controller
-{
+abstract class Controller {
 	
 }
