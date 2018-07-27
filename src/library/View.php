@@ -1,16 +1,26 @@
 <?php
 
+namespace mvc\library;
+
 /**
- * View class
+ * Class View
+ * @package mvc\library
  */
 class View
 {
-	
-	function __construct(argument)
+    /**
+     * View constructor.
+     */
+	function __construct()
 	{
 		
 	}
 
+    /**
+     * @param $view
+     * @param array $args
+     * @throws \Exception
+     */
 	public static function render($view, $args = [])
     {
         extract($args, EXTR_SKIP);

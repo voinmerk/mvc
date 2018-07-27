@@ -3,11 +3,14 @@
 namespace mvc\library\template;
 
 /**
- * Twig class
+ * Class Twig
+ * @package mvc\library\template
  */
 class Twig
 {
-	
+    /**
+     * Twig constructor.
+     */
 	public function __construct()
 	{
 		

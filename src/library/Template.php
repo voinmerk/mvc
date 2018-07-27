@@ -3,18 +3,18 @@
 namespace mvc\library;
 
 /**
- * Template class
+ * Class Template
+ * @package mvc\library
  */
 class Template
 {
 	private $adaptor;
 
-	/**
-	 * Constructor
-	 *
-	 * @param	string	$adaptor
-	 *
- 	*/
+    /**
+     * Template constructor.
+     * @param $adaptor
+     * @throws \Exception
+     */
 	public function __construct($adaptor) {
 		$class = 'mvc\\library\\template\\' . $adaptor;
 

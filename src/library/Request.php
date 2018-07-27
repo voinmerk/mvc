@@ -3,15 +3,19 @@
 namespace mvc\library;
 
 /**
-* Request class
-*/
+ * Class Request
+ * @package mvc\library
+ */
 class Request {
 	public $get = array();
 	public $post = array();
 	public $cookie = array();
 	public $files = array();
 	public $server = array();
-	
+
+    /**
+     * Request constructor.
+     */
 	public function __construct() {
 		$this->get = $this->clean($_GET);
 		$this->post = $this->clean($_POST);
@@ -20,7 +24,11 @@ class Request {
 		$this->files = $this->clean($_FILES);
 		$this->server = $this->clean($_SERVER);
 	}
-	
+
+    /**
+     * @param $data
+     * @return array|string
+     */
 	public function clean($data) {
 		if (is_array($data)) {
 			foreach ($data as $key => $value) {

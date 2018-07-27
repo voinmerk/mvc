@@ -5,17 +5,21 @@ namespace mvc;
 use mvc\library\Request;
 
 /**
-  * Router class
-  */
+ * Class Router
+ * @package mvc
+ */
  class Router
  {
- 	protected $routes = [];
- 	protected $params = [];
+ 	protected $routes = array();
+ 	protected $params = array();
 
  	private $request;
 
  	public $controller;
 
+     /**
+      * Router constructor.
+      */
  	public function __construct()
  	{
  		$routes = require DIR_ROOT . '/config/routes.php';
@@ -25,15 +29,19 @@ use mvc\library\Request;
  		foreach($routes as $key => $value) {
  			$route = explode('@', $value);
 
- 			$val = [
+ 			$val = array(
  				'controller' => $route[0],
  				'action' => $route[1]
- 			];
+            );
 
  			$this->add($key, $val);
  		}
  	}
 
+     /**
+      * @param $route
+      * @param array $params
+      */
  	public function add($route, $params = [])
  	{
  		$route = '#^' . $route . '$#';
@@ -41,6 +49,9 @@ use mvc\library\Request;
  		$this->routes[$route] = $params;
  	}
 
+     /**
+      * @return bool
+      */
  	public function match()
  	{
  		$url = $this->request->server['REQUEST_URI'];
@@ -56,12 +67,15 @@ use mvc\library\Request;
  		return false;
  	}
 
+     /**
+      * @throws \Exception
+      */
  	public function run()
  	{
  		if($this->match()) {
  			$controller = 'app\\controllers\\' . ucfirst($this->params['controller']);
 
- 			if(class_exists($this->controller)) {
+ 			if(class_exists($controller)) {
  				$action = 'action' . ucfirst($this->params['action']);
 
  				if(method_exists($controller, $action)) {

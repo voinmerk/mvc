@@ -2,9 +2,22 @@
 
 namespace mvc\library\db;
 
+/**
+ * Class MySQLi
+ * @package mvc\library\db
+ */
 final class MySQLi {
 	private $connection;
 
+    /**
+     * MySQLi constructor.
+     * @param $hostname
+     * @param $username
+     * @param $password
+     * @param $database
+     * @param string $port
+     * @throws \Exception
+     */
 	public function __construct($hostname, $username, $password, $database, $port = '3306') {
 		$this->connection = new \mysqli($hostname, $username, $password, $database, $port);
 
@@ -16,6 +29,11 @@ final class MySQLi {
 		$this->connection->query("SET SQL_MODE = ''");
 	}
 
+    /**
+     * @param $sql
+     * @return bool|\stdClass
+     * @throws \Exception
+     */
 	public function query($sql) {
 		$query = $this->connection->query($sql);
 
@@ -43,22 +61,38 @@ final class MySQLi {
 		}
 	}
 
+    /**
+     * @param $value
+     * @return string
+     */
 	public function escape($value) {
 		return $this->connection->real_escape_string($value);
 	}
-	
+
+    /**
+     * @return int
+     */
 	public function countAffected() {
 		return $this->connection->affected_rows;
 	}
 
+    /**
+     * @return mixed
+     */
 	public function getLastId() {
 		return $this->connection->insert_id;
 	}
-	
+
+    /**
+     * @return bool
+     */
 	public function connected() {
 		return $this->connection->ping();
 	}
-	
+
+    /**
+     *
+     */
 	public function __destruct() {
 		$this->connection->close();
 	}

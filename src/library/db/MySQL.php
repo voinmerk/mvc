@@ -2,9 +2,22 @@
 
 namespace mvc\library\db;
 
+/**
+ * Class MySQL
+ * @package mvc\library\db
+ */
 final class MySQL {
 	private $connection;
 
+    /**
+     * MySQL constructor.
+     * @param $hostname
+     * @param $username
+     * @param $password
+     * @param $database
+     * @param string $port
+     * @throws \Exception
+     */
 	public function __construct($hostname, $username, $password, $database, $port = '3306') {
 		if (!$this->connection = mysql_connect($hostname . ':' . $port, $username, $password)) {
 			trigger_error('Error: Could not make a database link using ' . $username . '@' . $hostname);
@@ -21,6 +34,11 @@ final class MySQL {
 		mysql_query("SET SQL_MODE = ''", $this->connection);
 	}
 
+    /**
+     * @param $sql
+     * @return bool|\stdClass
+     * @throws \Exception
+     */
 	public function query($sql) {
 		if ($this->connection) {
 			$resource = mysql_query($sql, $this->connection);
@@ -58,24 +76,37 @@ final class MySQL {
 		}
 	}
 
+    /**
+     * @param $value
+     * @return string
+     */
 	public function escape($value) {
 		if ($this->connection) {
 			return mysql_real_escape_string($value, $this->connection);
 		}
 	}
 
+    /**
+     * @return int
+     */
 	public function countAffected() {
 		if ($this->connection) {
 			return mysql_affected_rows($this->connection);
 		}
 	}
 
+    /**
+     * @return int
+     */
 	public function getLastId() {
 		if ($this->connection) {
 			return mysql_insert_id($this->connection);
 		}
 	}
-	
+
+    /**
+     * @return bool
+     */
 	public function isConnected() {
 		if ($this->connection) {
 			return true;
@@ -83,7 +114,7 @@ final class MySQL {
 			return false;
 		}
 	}
-	
+
 	public function __destruct() {
 		if ($this->connection) {
 			mysql_close($this->connection);

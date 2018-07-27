@@ -5,6 +5,10 @@
  */
 class App extends \mvc\Application
 {
+    /**
+     * App constructor.
+     * @param $config
+     */
 	public function __construct($config)
 	{
 		static::$config = $config;
@@ -14,4 +18,4 @@ class App extends \mvc\Application
 	}
 }
 
-spl_autoload_register(['App', 'autoload'], true, true);
+spl_autoload_register(array('App', 'autoload'), true, true);

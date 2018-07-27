@@ -9,10 +9,14 @@ class Application
 {
 	public static $router;
 	
-	public static $classMap = [];
+	public static $classMap = array();
 
-	public static $config = [];
+	public static $config = array();
 
+    /**
+     * @param $className
+     * @throws \Exception
+     */
 	public static function autoload($className)
 	{
 		if(isset(static::$classMap[$className])) {
@@ -28,7 +32,7 @@ class Application
 			return;
 		}
 
-		include $classFile;
+		require $classFile;
 
 		if(!class_exists($classFile, false) && !interface_exists($classFile, false) && !trait_exists($className, false)) {
 			throw new \Exception("Unable to find '$className' in file: $classFile. Namespace messing?");

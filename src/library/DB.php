@@ -2,20 +2,18 @@
 
 namespace mvc\library;
 
+/**
+ * Class DB
+ * @package mvc\library
+ */
 class DB {
 	private $adaptor;
 
-	/**
-	 * Constructor
-	 *
-	 * @param	string	$adaptor
-	 * @param	string	$hostname
-	 * @param	string	$username
-     * @param	string	$password
-	 * @param	string	$database
-	 * @param	int		$port
-	 *
- 	*/
+    /**
+     * DB constructor.
+     * @param $db
+     * @throws \Exception
+     */
 	public function __construct($db) {
 		$class = 'mvc\\library\\db\\' . $db['adaptor'];
 
@@ -26,62 +24,47 @@ class DB {
 		}
 	}
 
-	/**
-     * 
-     *
-     * @param	string	$sql
-	 * 
-	 * @return	array
+    /**
+     * @param $sql
+     * @return mixed
      */
 	public function query($sql) {
 		return $this->adaptor->query($sql);
 	}
 
-	/**
-     * 
-     *
-     * @param	string	$value
-	 * 
-	 * @return	string
+    /**
+     * @param $value
+     * @return mixed
      */
 	public function escape($value) {
 		return $this->adaptor->escape($value);
 	}
 
-	/**
-     * 
-     *
-     * @param	string	$value
-	 * 
-	 * @return	string
+    /**
+     * @param $value
+     * @return string
      */
 	public function escapeString($value) {
 		return "'" . $this->adaptor->escape($value) . "'";
 	}
 
-	/**
-     * 
-	 * 
-	 * @return	int
+    /**
+     * @return mixed
      */
 	public function countAffected() {
 		return $this->adaptor->countAffected();
 	}
 
-	/**
-     * 
-	 * 
-	 * @return	int
+    /**
+     * @return mixed
      */
 	public function getLastId() {
 		return $this->adaptor->getLastId();
 	}
-	
-	/**
-     * 
-	 * 
-	 * @return	bool
-     */	
+
+    /**
+     * @return mixed
+     */
 	public function connected() {
 		return $this->adaptor->connected();
 	}

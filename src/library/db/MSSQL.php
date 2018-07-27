@@ -2,6 +2,10 @@
 
 namespace mvc\library\db;
 
+/**
+ * Class MSSQL
+ * @package mvc\library\db
+ */
 final class MSSQL {
 	private $connection;
 
@@ -18,6 +22,11 @@ final class MSSQL {
 		mssql_query("SET CHARACTER SET utf8", $this->connection);
 	}
 
+    /**
+     * @param $sql
+     * @return bool|\stdClass
+     * @throws \Exception
+     */
 	public function query($sql) {
 		$resource = mssql_query($sql, $this->connection);
 
@@ -51,16 +60,26 @@ final class MSSQL {
 		}
 	}
 
+    /**
+     * @param $value
+     * @return string
+     */
 	public function escape($value) {
 		$unpacked = unpack('H*hex', $value);
 
 		return '0x' . $unpacked['hex'];
 	}
 
+    /**
+     * @return int
+     */
 	public function countAffected() {
 		return mssql_rows_affected($this->connection);
 	}
 
+    /**
+     * @return bool|string
+     */
 	public function getLastId() {
 		$last_id = false;
 

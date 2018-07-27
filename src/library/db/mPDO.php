@@ -2,10 +2,23 @@
 
 namespace mvc\library\db;
 
+/**
+ * Class mPDO
+ * @package mvc\library\db
+ */
 final class mPDO {
 	private $connection = null;
 	private $statement = null;
 
+    /**
+     * mPDO constructor.
+     * @param $hostname
+     * @param $username
+     * @param $password
+     * @param $database
+     * @param string $port
+     * @throws \Exception
+     */
 	public function __construct($hostname, $username, $password, $database, $port = '3306') {
 		try {
 			$this->connection = new \PDO("mysql:host=" . $hostname . ";port=" . $port . ";dbname=" . $database, $username, $password, array(\PDO::ATTR_PERSISTENT => true));
@@ -19,10 +32,19 @@ final class mPDO {
 		$this->connection->exec("SET SQL_MODE = ''");
 	}
 
+    /**
+     * @param $sql
+     */
 	public function prepare($sql) {
 		$this->statement = $this->connection->prepare($sql);
 	}
 
+    /**
+     * @param $parameter
+     * @param $variable
+     * @param int $data_type
+     * @param int $length
+     */
 	public function bindParam($parameter, $variable, $data_type = \PDO::PARAM_STR, $length = 0) {
 		if ($length) {
 			$this->statement->bindParam($parameter, $variable, $data_type, $length);
@@ -31,6 +53,9 @@ final class mPDO {
 		}
 	}
 
+    /**
+     * @throws \Exception
+     */
 	public function execute() {
 		try {
 			if ($this->statement && $this->statement->execute()) {
@@ -50,6 +75,12 @@ final class mPDO {
 		}
 	}
 
+    /**
+     * @param $sql
+     * @param array $params
+     * @return bool|\stdClass
+     * @throws \Exception
+     */
 	public function query($sql, $params = array()) {
 		$this->statement = $this->connection->prepare($sql);
 		
@@ -83,10 +114,17 @@ final class mPDO {
 		}
 	}
 
+    /**
+     * @param $value
+     * @return mixed
+     */
 	public function escape($value) {
 		return str_replace(array("\\", "\0", "\n", "\r", "\x1a", "'", '"'), array("\\\\", "\\0", "\\n", "\\r", "\Z", "\'", '\"'), $value);
 	}
 
+    /**
+     * @return int
+     */
 	public function countAffected() {
 		if ($this->statement) {
 			return $this->statement->rowCount();
@@ -95,10 +133,16 @@ final class mPDO {
 		}
 	}
 
+    /**
+     * @return string
+     */
 	public function getLastId() {
 		return $this->connection->lastInsertId();
 	}
-	
+
+    /**
+     * @return bool
+     */
 	public function isConnected() {
 		if ($this->connection) {
 			return true;

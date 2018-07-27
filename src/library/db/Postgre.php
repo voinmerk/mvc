@@ -2,9 +2,22 @@
 
 namespace mvc\library\db;
 
+/**
+ * Class Postgre
+ * @package mvc\library\db
+ */
 final class Postgre {
 	private $link;
 
+    /**
+     * Postgre constructor.
+     * @param $hostname
+     * @param $username
+     * @param $password
+     * @param $database
+     * @param string $port
+     * @throws \Exception
+     */
 	public function __construct($hostname, $username, $password, $database, $port = '5432') {
 		if (!$this->link = pg_connect('hostname=' . $hostname . ' port=' . $port .  ' username=' . $username . ' password='	. $password . ' database=' . $database)) {
 			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname);
@@ -17,6 +30,11 @@ final class Postgre {
 		pg_query($this->link, "SET CLIENT_ENCODING TO 'UTF8'");
 	}
 
+    /**
+     * @param $sql
+     * @return bool|\stdClass
+     * @throws \Exception
+     */
 	public function query($sql) {
 		$resource = pg_query($this->link, $sql);
 
@@ -50,14 +68,25 @@ final class Postgre {
 		}
 	}
 
+    /**
+     * @param $value
+     * @return string
+     */
 	public function escape($value) {
 		return pg_escape_string($this->link, $value);
 	}
 
+    /**
+     * @return int
+     */
 	public function countAffected() {
 		return pg_affected_rows($this->link);
 	}
 
+    /**
+     * @return mixed
+     * @throws \Exception
+     */
 	public function getLastId() {
 		$query = $this->query("SELECT LASTVAL() AS `id`");
 
