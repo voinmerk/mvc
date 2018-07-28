@@ -8,12 +8,28 @@ namespace mvc\library;
  */
 class View
 {
+    private $template = array();
+
+    private $engine;
+
     /**
      * View constructor.
+     * @param $config
+     * @throws \Exception
      */
-	function __construct()
+	public function __construct($config)
 	{
-		
+		$this->template = $config['template'];
+
+        $this->template['params']['views'] = DIR_ROOT . '/themes/' . App::$config['theme'] . '/views/';
+
+		$engineClass = 'mvc\\library\\template\\' . $this->template['engine'];
+
+		if(class_exists($engineClass)) {
+		    $this->engine = new $engineClass($this->template['params']);
+        } else {
+		    throw new \Exception("Class '$engineClass' not found!");
+        }
 	}
 
     /**
@@ -21,16 +37,29 @@ class View
      * @param array $args
      * @throws \Exception
      */
-	public static function render($view, $args = [])
+	public function render($view, $data = array())
     {
-        extract($args, EXTR_SKIP);
+        extract($data, EXTR_SKIP);
 
-        $file = dirname(__DIR__) . "/App/Views/$view";
+        $viewFile = $this->template['params']['views'] . $view;
         
-        if (is_readable($file)) {
-            require $file;
+        if (file_exists($viewFile)) {
+            require $viewFile;
         } else {
-            throw new \Exception("$file not found");
+            throw new \Exception("View file '$viewFile' not found!");
         }
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function getLayout($data = array())
+    {
+        // Тут необходимо подгрузить Layout
+        // Далее залить в него через рендер, подключаемую страницу
+        // После выдать пользователю на экран
+        
+        return $data;
     }
 }

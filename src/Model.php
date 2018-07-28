@@ -13,11 +13,10 @@ abstract class Model {
 
     /**
      * Model constructor.
-     * @param $config
      * @throws \Exception
      */
-	public function __construct($config)
+	public function __construct()
 	{
-		$this->db = new DB($config);
+		$this->db = new DB(App::$config['db']);
 	}
 }

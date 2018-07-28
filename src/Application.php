@@ -2,6 +2,8 @@
 
 namespace mvc;
 
+defined('APP_DEBUG') or define('APP_DEBUG', false);
+
 /**
  * Application class
  */
@@ -28,19 +30,18 @@ class Application
                 return;
             }
 		} else {
-			echo $className;
 			return;
 		}
 
 		require $classFile;
 
-		if(!class_exists($classFile, false) && !interface_exists($classFile, false) && !trait_exists($className, false)) {
+		if(APP_DEBUG && !class_exists($classFile, false) && !interface_exists($classFile, false) && !trait_exists($className, false)) {
 			throw new \Exception("Unable to find '$className' in file: $classFile. Namespace messing?");
 		}
 	}
 
 	public function run()
 	{
-		echo 'Run Run!';
+		return;
 	}
 }

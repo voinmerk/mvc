@@ -6,12 +6,13 @@ namespace mvc\library\template;
  * Class Twig
  * @package mvc\library\template
  */
-class Twig
+final class Twig
 {
     /**
      * Twig constructor.
+     * @param $config
      */
-	public function __construct()
+	public function __construct($config)
 	{
 		
 	}
