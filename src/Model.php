@@ -9,7 +9,7 @@ use mvc\library\DB;
  * @package mvc
  */
 abstract class Model {
-	public $db;
+	protected $db;
 
     /**
      * Model constructor.
